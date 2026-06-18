@@ -80,11 +80,11 @@ Floating-point numbers must use Forth's scientific notation, i.e. suffixed with 
 ### Examples
 
 ```
-3.0e0 4.0e0 +        -> 7.0
-5.0e0 sqrt           -> square root of 5
-2.0e0 3.0e0 ^        -> 2 to the power of 3 = 8.0
-pi 2.0e0 *           -> 2 * pi
-4.0e0 carre 5.0e0 carre + sqrt   -> hypotenuse of a 4-5 triangle (if "carre" is defined)
+3.0e0 4.0e0 +                      -> 7.0
+5.0e0 sqrt                         -> square root of 5
+2.0e0 3.0e0 ^                      -> 2 to the power of 3 = 8.0
+pi 2.0e0 *                         -> 2 * pi
+4.0e0 carre 5.0e0 carre + sqrt     -> hypotenuse of a 4-5 triangle (if "carre" is defined)
 ```
 
 Results stay on the stack and can be reused in subsequent calculations.
