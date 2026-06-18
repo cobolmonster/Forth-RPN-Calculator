@@ -117,7 +117,3 @@ Example:
 Note: to duplicate the top of the stack, use `fdup` (not `dup`, which operates on a different stack reserved for integers).
 
 Every function you define is automatically saved to `custom_words.fs` (created in the same folder) and will still be available the next time the program is launched.
-
-## License
-
-Free to use and modify.
