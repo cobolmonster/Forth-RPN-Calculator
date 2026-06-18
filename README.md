@@ -1,10 +1,10 @@
-# Calculatrice RPN en Forth
+# RPN Calculator in Forth
 
-Une calculatrice scientifique en notation polonaise inversée (RPN), écrite en [Forth](https://fr.wikipedia.org/wiki/Forth_(langage)) et exécutée avec [gforth](https://gforth.org/). Elle gère les opérations de base, les fonctions scientifiques, une mémoire, et permet de définir ses propres fonctions à la volée — celles-ci sont sauvegardées automatiquement et rechargées à chaque lancement.
+A scientific calculator using Reverse Polish Notation (RPN), written in [Forth](https://en.wikipedia.org/wiki/Forth_(programming_language)) and run with [gforth](https://gforth.org/). It supports basic operations, scientific functions, a memory register, and lets you define your own functions on the fly — these are automatically saved and reloaded on every launch.
 
-Aucune compilation requise : le script s'exécute directement avec l'interpréteur gforth.
+No compilation required: the script runs directly through the gforth interpreter.
 
-## Installation de gforth
+## Installing gforth
 
 ### Linux (Debian / Ubuntu)
 
@@ -13,30 +13,30 @@ sudo apt update
 sudo apt install gforth
 ```
 
-gforth est packagé dans la plupart des distributions. Sur Fedora : `sudo dnf install gforth`. Sur Arch : `sudo pacman -S gforth`.
+gforth is packaged in most distributions. On Fedora: `sudo dnf install gforth`. On Arch: `sudo pacman -S gforth`.
 
 ### Windows
 
-gforth ne propose pas d'installeur récent pour Windows ; on utilise le dernier installeur officiel disponible (version 0.7.0, mais toujours fonctionnelle) :
+gforth doesn't have a recent Windows installer, so we use the latest official one available (version 0.7.0, still fully functional):
 
-1. Télécharge l'installeur officiel : https://www.complang.tuwien.ac.at/forth/gforth/gforth-0.7.0.exe
-2. Lance-le et termine l'installation (next-next-finish).
-3. Le programme ne s'ajoute pas forcément au PATH. Pour le retrouver :
-   - tape "gforth" dans la recherche du menu Démarrer ;
-   - si un résultat apparaît, fais un clic droit dessus → **Ouvrir l'emplacement du fichier** pour voir le dossier d'installation réel ;
-   - sinon, cherche manuellement dans `C:\Program Files (x86)\` un dossier `gforth`.
-4. Dans ce dossier, l'exécutable `gforth.exe` se trouve directement à la racine (pas de sous-dossier `bin`). Vérifie avec :
+1. Download the official installer: https://www.complang.tuwien.ac.at/forth/gforth/gforth-0.7.0.exe
+2. Run it and complete the installation (next-next-finish).
+3. The program isn't necessarily added to PATH. To find it:
+   - type "gforth" in the Start menu search;
+   - if a result shows up, right-click it → **Open file location** to see the actual install folder;
+   - otherwise, manually look inside `C:\Program Files (x86)\` for a `gforth` folder.
+4. In that folder, `gforth.exe` sits directly at the root (no `bin` subfolder). Check with:
    ```powershell
    dir *.exe
    ```
-5. Teste-le :
+5. Test it:
    ```powershell
    .\gforth.exe --version
    ```
 
-Pour éviter de retaper le chemin complet à chaque fois, ajoute ce dossier au PATH : Paramètres → Système → Informations système → Paramètres système avancés → Variables d'environnement → variable `Path` → Modifier → Nouveau → coller le chemin du dossier contenant `gforth.exe`. Redémarre ensuite le terminal.
+To avoid typing the full path every time, add this folder to PATH: Settings → System → About → Advanced system settings → Environment Variables → `Path` variable → Edit → New → paste the path to the folder containing `gforth.exe`. Then restart your terminal.
 
-## Exécuter le script
+## Running the script
 
 ### Linux / macOS
 
@@ -44,7 +44,7 @@ Pour éviter de retaper le chemin complet à chaque fois, ajoute ce dossier au P
 gforth rpn_calculator.fs
 ```
 
-ou, en mode exécutable :
+or, as an executable:
 
 ```bash
 chmod +x rpn_calculator.fs
@@ -53,71 +53,71 @@ chmod +x rpn_calculator.fs
 
 ### Windows
 
-Si `gforth` a été ajouté au PATH :
+If `gforth` was added to PATH:
 
 ```powershell
 gforth rpn_calculator.fs
 ```
 
-Sinon, avec le chemin complet vers l'exécutable :
+Otherwise, using the full path to the executable:
 
 ```powershell
 & "C:\Program Files (x86)\gforth\gforth.exe" rpn_calculator.fs
 ```
 
-Dans les deux cas, place-toi d'abord (avec `cd`) dans le dossier contenant `rpn_calculator.fs`.
+In both cases, `cd` into the folder containing `rpn_calculator.fs` first.
 
-## Utilisation de la calculatrice
+## Using the calculator
 
-Une fois lancée, la calculatrice affiche l'état de la pile et une invite `rpn>`.
+Once launched, the calculator displays the current stack state and a `rpn>` prompt.
 
-### Notation polonaise inversée
+### Reverse Polish Notation
 
-On tape d'abord les nombres, puis l'opérateur. Pas de parenthèses, pas de priorité d'opérateur à gérer : tout se lit de gauche à droite.
+You type the numbers first, then the operator. No parentheses, no operator precedence to worry about: everything reads left to right.
 
-Les nombres flottants doivent être écrits avec la notation scientifique de Forth, c'est-à-dire suffixés par `e0` (ex: `3.0e0`, pas `3` ni `3.0`).
+Floating-point numbers must use Forth's scientific notation, i.e. suffixed with `e0` (e.g. `3.0e0`, not `3` or `3.0`).
 
-### Exemples
+### Examples
 
 ```
 3.0e0 4.0e0 +        -> 7.0
-5.0e0 sqrt           -> racine carree de 5
-2.0e0 3.0e0 ^        -> 2 puissance 3 = 8.0
+5.0e0 sqrt           -> square root of 5
+2.0e0 3.0e0 ^        -> 2 to the power of 3 = 8.0
 pi 2.0e0 *           -> 2 * pi
-4.0e0 carre 5.0e0 carre + sqrt   -> hypotenuse d'un triangle 4-5 (si "carre" est defini)
+4.0e0 carre 5.0e0 carre + sqrt   -> hypotenuse of a 4-5 triangle (if "carre" is defined)
 ```
 
-Les résultats restent sur la pile et peuvent être réutilisés dans les calculs suivants.
+Results stay on the stack and can be reused in subsequent calculations.
 
-### Opérateurs et fonctions disponibles
+### Available operators and functions
 
-| Catégorie    | Mots disponibles |
-|--------------|-------------------|
-| Opérateurs   | `+` `-` `*` `/` `^` (puissance) |
-| Fonctions    | `sqrt` `sin` `cos` `tan` `log` (base 10) `ln` (naturel) |
-| Constantes   | `pi` `e` |
-| Mémoire      | `ms` (stocker) `mr` (rappeler) `mc` (effacer) |
-| Autres       | `help` (aide) `bye` (quitter) |
+| Category    | Available words |
+|-------------|-------------------|
+| Operators   | `+` `-` `*` `/` `^` (power) |
+| Functions   | `sqrt` `sin` `cos` `tan` `log` (base 10) `ln` (natural) |
+| Constants   | `pi` `e` |
+| Memory      | `ms` (store) `mr` (recall) `mc` (clear) |
+| Other       | `help` `bye` (quit) |
 
-### Définir ses propres fonctions
+### Defining your own functions
 
-On peut créer une nouvelle fonction directement dans la console avec la syntaxe native de Forth :
+You can create a new function directly in the console using Forth's native syntax:
 
 ```
-: nom-de-la-fonction ... ;
+: function-name ... ;
 ```
 
-Exemple :
+Example:
 
 ```
 : carre fdup * ;
 5.0e0 carre        -> 25.0
 ```
 
-Attention : pour dupliquer le sommet de pile, il faut utiliser `fdup` (et non `dup`, qui agit sur une pile différente, réservée aux entiers).
+Note: to duplicate the top of the stack, use `fdup` (not `dup`, which operates on a different stack reserved for integers).
 
-Chaque fonction définie est automatiquement sauvegardée dans `custom_words.fs` (créé dans le même dossier) et sera encore disponible la prochaine fois que le programme est lancé.
+Every function you define is automatically saved to `custom_words.fs` (created in the same folder) and will still be available the next time the program is launched.
 
-## Licence
+## License
 
-Libre d'utilisation et de modification.
+Free to use and modify.
